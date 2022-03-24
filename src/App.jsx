@@ -5,16 +5,21 @@ import Nav from './Components/Nav/Nav';
 
 function App() {
   const [guns, setGuns] = useState([])
+  const [cart, setCart] = useState([])
     useEffect(() => {
         fetch('data.json')
         .then(res => res.json()).then(data => setGuns(data))
     }, [])
-    console.log(guns);
+  const addToCart = (gun) => {
+    const newCart = [...cart, gun]
+    setCart(newCart)
+    }
+   
   return (
     <div>
-      <Nav/>
+      <Nav cart={cart}/>
       <div className="card-container">
-        {guns.map(gun => <Card guns={gun}/>)}
+        {guns.map(gun => <Card addToCart={addToCart}  guns={gun}/>)}
       </div>
     </div>
   );
